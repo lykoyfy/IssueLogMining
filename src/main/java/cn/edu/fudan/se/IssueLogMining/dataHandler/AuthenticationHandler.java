@@ -6,8 +6,19 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import cn.edu.fudan.se.IssueLogMining.httpHandler.HttpRequestClient;
+import cn.edu.fudan.se.IssueLogMining.httpHandler.HttpRequestClientFactory;
 
 public class AuthenticationHandler extends AbstractDataHandler {
+	
+	private HttpRequestClientFactory clientFactory;
+	
+	public void setHttpRequest(HttpRequestClientFactory clientFactory) {
+		this.clientFactory = clientFactory;
+	}
 
 	@Override
 	public void cancelled() {
@@ -21,9 +32,14 @@ public class AuthenticationHandler extends AbstractDataHandler {
         System.out.println("completedss!!");
         System.out.println(response.getStatusLine());
         HttpEntity myEntity = response.getEntity();
-        System.out.println(myEntity.getContentType());
         try {
-			System.out.println(EntityUtils.toString(myEntity));
+            JSONTokener jsonTokener = new JSONTokener(EntityUtils.toString(myEntity));
+            JSONObject tokenJson = (JSONObject) jsonTokener.nextValue();  
+            String token = tokenJson.getString("token");
+            int id = tokenJson.getInt("id");
+            System.out.println(token);
+            System.out.println(id);
+            clientFactory.setToken(token);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -33,8 +49,7 @@ public class AuthenticationHandler extends AbstractDataHandler {
 		}
 
         super.printInfo();
-		super.countDown();
-		
+		super.countDown();		
 	}
 
 	@Override
@@ -42,12 +57,13 @@ public class AuthenticationHandler extends AbstractDataHandler {
 		super.countDown();
         System.out.println("failed!!");
         super.printInfo();
-		
 	}
 
 	@Override
 	public AbstractDataHandler clone() {
-		return new AuthenticationHandler();
+		AuthenticationHandler ret =  new AuthenticationHandler();
+		ret.setHttpRequest(clientFactory);
+		return ret;
 	}
 	
 }

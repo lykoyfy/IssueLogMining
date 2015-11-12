@@ -3,7 +3,7 @@
  * author: lyk
  * 
  */
-package cn.edu.fudan.se.IssueLogMining.http;
+package cn.edu.fudan.se.IssueLogMining.httpHandler;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -14,7 +14,7 @@ import org.apache.http.impl.nio.client.HttpAsyncClients;
 
 import cn.edu.fudan.se.IssueLogMining.dataHandler.AbstractDataHandler;
 
-public class HttpRequestFactory {
+public class HttpRequestClient {
 
 	private CloseableHttpAsyncClient httpclient;
 	private String token;
@@ -25,7 +25,7 @@ public class HttpRequestFactory {
 	
 	public void init(){
 		RequestConfig requestConfig = RequestConfig.custom()
-				    .setSocketTimeout(3000).setConnectTimeout(3000).build();
+				    .setSocketTimeout(300000).setConnectTimeout(300000).build();
 		httpclient = HttpAsyncClients.custom()
 				    .setDefaultRequestConfig(requestConfig).build();
 	}
@@ -36,7 +36,8 @@ public class HttpRequestFactory {
 			final CountDownLatch latch = new CountDownLatch(urls.length);
 			
 			for(String url : urls){
-			    final HttpGet request = new HttpGet(url);
+				String tokenUrl = this.addToken(url);
+			    final HttpGet request = new HttpGet(tokenUrl);
 			    AbstractDataHandler cloneDataHandler =  dataHandler.clone();
 			    cloneDataHandler.setLatch(latch);
 			    cloneDataHandler.setRequest(request);
@@ -46,16 +47,22 @@ public class HttpRequestFactory {
 			try {
 				latch.await();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 		}finally{
 			httpclient.close();
+			System.out.println("over!!!");
 		}
 		 
 				
 	}
 	
-	
+	private String addToken(String url){
+		if(token != null){
+			String ret = url+"&token="+token;
+			return ret;
+		}
+		return url;
+	}
 }

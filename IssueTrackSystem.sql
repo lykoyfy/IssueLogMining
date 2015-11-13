@@ -8,14 +8,14 @@ create table user(
 	primary key(id)
 );
 
-drop table if exists group;
-create table group(
+drop table if exists groups;
+create table groups(
 	id integer not null,
 	name varchar(100),
 	description text,
-	is_bug_group integer,
+	is_bug_group boolean,
 	user_regexp varchar(200),
-	is_active integer,
+	is_active boolean,
 	primary key(id)
 );
 
@@ -40,11 +40,11 @@ create table component(
 	default_qa_contact varchar(100),
 	sort_key integer,
 	is_active boolean,
-	primary key(id);
+	primary key(id)
 );
 
 drop table if exists bug;
-create table if exists bug(
+create table bug(
 	id integer,
 	actual_time float,
 	assigned_to varchar(100),
@@ -53,23 +53,23 @@ create table if exists bug(
 	creation_time varchar(100),
 	creator varchar(100),
 	deadline varchar(100),
-	dupe_of integer,     /**duplicated id**/
-	is_cc_accessible boolean(100),
-	is_confirmed boolean(100),
+	dupe_of integer,     
+	is_cc_accessible boolean,
+	is_confirmed boolean,
 	is_open boolean,
 	is_creator_accessible boolean,
 	last_change_time varchar(100),
-	op_sys varchar,
-	platform varchar,
-	priority varchar,
-	product varchar,
-	qa_contact varchar,
-	severity varchar,
-	status varchar,
-	summary varchar,
-	target_milestone varchar,
-	version varchar,
-	whiteboard varchar,
+	op_sys varchar(100),
+	platform varchar(100),
+	priority varchar(100),
+	product varchar(100),
+	qa_contact varchar(100),
+	severity varchar(100),
+	status varchar(100),
+	summary varchar(100),
+	target_milestone varchar(100),
+	version varchar(100),
+	whiteboard varchar(100),
 	primary key(id)
 );
 
@@ -127,19 +127,20 @@ create table flag_type(
 	sort_key integer,
 	is_active boolean,
 	is_requestable boolean,	
+    primary key(id)
 );
 
 drop table if exists history;
 create table history(
 	id integer not null,
 	bug_id integer,
-	when varchar(100),
+	time varchar(100),
 	who varchar(100),
 	primary key(id)
 );
 
-drop table if exists change;
-create table change(
+drop table if exists changes;
+create table changes(
 	id integer not null,
 	history_id integer,
 	field_name varchar(100),

@@ -1,7 +1,17 @@
 package cn.edu.fudan.se.IssueLogMining.bean;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="comment")
 public class Comment {
+	@Id
+	@Column(name = "id", unique = true, nullable = false)
 	private int id;
+
 	private int bug_id;
 	private int attachment_id;
 	private int count;

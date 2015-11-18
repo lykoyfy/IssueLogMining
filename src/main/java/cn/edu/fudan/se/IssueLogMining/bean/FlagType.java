@@ -1,7 +1,17 @@
 package cn.edu.fudan.se.IssueLogMining.bean;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="flag_type")
 public class FlagType {
+	@Id
+	@Column(name = "id", unique = true, nullable = false)
 	private int id;
+
 	private String name;
 	private String description;
 	private String cc_list;

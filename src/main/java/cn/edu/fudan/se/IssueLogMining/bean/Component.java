@@ -1,7 +1,17 @@
 package cn.edu.fudan.se.IssueLogMining.bean;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="component")
 public class Component {
+	@Id
+	@Column(name = "id", unique = true, nullable = false)
 	private int id;
+
 	private String name;
 	private String description;
 	private String default_assigned_to;

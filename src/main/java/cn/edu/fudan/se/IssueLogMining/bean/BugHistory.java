@@ -1,7 +1,17 @@
 package cn.edu.fudan.se.IssueLogMining.bean;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="bug_history")
 public class BugHistory {
+	@Id
+	@Column(name = "id", unique = true, nullable = false)
 	private int id;
+
 	private int bug_id;
 	private String time;
 	private String who;

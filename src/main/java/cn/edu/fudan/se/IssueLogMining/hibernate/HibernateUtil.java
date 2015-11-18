@@ -38,6 +38,16 @@ public class HibernateUtil {
 		
 	}
 	
+	public <T> void save(T t){
+		Session session = HibernateSessionFactory.currentSession();
+		Transaction tran = session.beginTransaction();
+		
+		session.save(t);
+		
+		tran.commit();
+		
+	}
+	
 	public void closeSession(){
 		HibernateSessionFactory.closeSession();
 	}

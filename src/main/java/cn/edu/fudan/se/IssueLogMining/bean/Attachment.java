@@ -1,7 +1,17 @@
 package cn.edu.fudan.se.IssueLogMining.bean;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="attachment")
 public class Attachment {
+	@Id
+	@Column(name = "id", unique = true, nullable = false)
 	private int id;
+	
 	private int size;
 	private String creation_time;
 	private String last_change_time;

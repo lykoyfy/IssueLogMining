@@ -1,4 +1,4 @@
-package cn.edu.fudan.se.IssueLogMining.dataHandler;
+ package cn.edu.fudan.se.IssueLogMining.dataHandler;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -15,8 +15,11 @@ import org.json.JSONTokener;
 
 import cn.edu.fudan.se.IssueLogMining.bean.User;
 import cn.edu.fudan.se.IssueLogMining.decoder.UserDecode;
+import cn.edu.fudan.se.IssueLogMining.hibernate.HibernateUtil;
 
 public class UserDataHandler extends AbstractDataHandler{
+	
+	private HibernateUtil dataUtil;
 
 	@Override
 	public void cancelled() {
@@ -44,12 +47,11 @@ public class UserDataHandler extends AbstractDataHandler{
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		
         try {
         	List<User> userList = UserDecode.decodeUser(result.toString());
-        	for(User user: userList){
-        		System.out.println(user);
-        	}
-            System.out.println(result.toString());
+        	dataUtil.save(userList);
+        	dataUtil.closeSession();
 		} catch (ParseException e) {
 			e.printStackTrace();
 		} finally{

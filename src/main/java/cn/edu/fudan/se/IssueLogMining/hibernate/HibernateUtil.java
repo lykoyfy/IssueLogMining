@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 public class HibernateUtil {
-
 	
 	@SuppressWarnings("unchecked")
 	public <T> List<T> query(String hql){

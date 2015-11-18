@@ -14,7 +14,7 @@ public class HibernateUtilTest {
 		User user = new User();
 		user.setCan_login(true);
 		user.setEmail("email");
-		user.setId(19);
+		user.setId(26);
 		user.setIs_new(false);
 		user.setName("name");
 		user.setReal_name("real_name");
@@ -24,10 +24,10 @@ public class HibernateUtilTest {
 		
 		util.save(list);
 		
-//		List<User> users = util.query("from User u where u.id=11");
-//		User userTest = users.get(0);
+		List<User> users = util.query("from User u where u.id=11");
+		User userTest = users.get(0);
 
-//		System.out.println(userTest.getId() + "\t" + user.getId());
+		System.out.println(userTest.getId() + "\t" + user.getId());
 		
 		util.closeSession();
 		util.closeFactory();

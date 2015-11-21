@@ -17,18 +17,24 @@ public class HibenrnateBeanClassTest {
 	private static HibernateUtil util = new HibernateUtil();
 	
 	public static void main(String[] args){
-		saveUser();
-		saveAttachment();
-		saveBug();
-		saveBugChange();
-		saveComment();
-		saveComponent();
-		saveFlag();
-		saveFlagType();
-		saveGroup();
+		try{
+			saveUser();
 		
-		util.closeSession();
-		util.closeFactory();
+			saveAttachment();
+			saveBug();
+			saveBugChange();
+			saveComment();
+			saveComponent();
+			saveFlag();
+			saveFlagType();
+			saveGroup();
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Error!!!");
+		}finally{
+			util.closeSession();
+			util.closeFactory();			
+		}
 	}
 	
 	public static void saveUser(){
@@ -61,7 +67,7 @@ public class HibenrnateBeanClassTest {
 	public static void saveBugChange(){
 		BugChange change = new BugChange();
 		change.setId(111);
-		change.setField_name("sdadsad");
+		change.setField_name("sdadsad"); 
 		
 		util.save(change);
 	}

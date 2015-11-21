@@ -42,7 +42,7 @@ public class HibernateUtil {
 		Session session = HibernateSessionFactory.currentSession();
 		Transaction tran = session.beginTransaction();
 		
-		session.save(t);
+		session.saveOrUpdate(t);
 		
 		tran.commit();
 		

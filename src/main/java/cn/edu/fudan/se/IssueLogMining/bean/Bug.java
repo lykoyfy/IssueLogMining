@@ -1,6 +1,15 @@
 package cn.edu.fudan.se.IssueLogMining.bean;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Bug")
 public class Bug {
+	@Id
+	@Column(name = "id", unique = true, nullable = false)
 	private int id;
 	private double actual_time;
 	private String assigned_to;

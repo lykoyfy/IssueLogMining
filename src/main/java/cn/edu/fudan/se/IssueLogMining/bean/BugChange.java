@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="bug_change")
+@Table(name="changes")
 public class BugChange {
 	@Id
 	@Column(name = "id", unique = true, nullable = false)

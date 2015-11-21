@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="group")
+@Table(name="groups")
 public class Group {
 	@Id
 	@Column(name = "id", unique = true, nullable = false)

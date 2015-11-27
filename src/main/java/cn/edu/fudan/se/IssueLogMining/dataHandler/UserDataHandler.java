@@ -19,8 +19,6 @@ import cn.edu.fudan.se.IssueLogMining.hibernate.HibernateUtil;
 
 public class UserDataHandler extends AbstractDataHandler{
 	
-	private HibernateUtil dataUtil;
-
 	@Override
 	public void cancelled() {
 		super.countDown();
@@ -72,7 +70,9 @@ public class UserDataHandler extends AbstractDataHandler{
 
 	@Override
 	public AbstractDataHandler clone() {
-		return new UserDataHandler();
+		UserDataHandler handler = new UserDataHandler();
+		handler.setUtil(dataUtil);
+		return handler;
 	}
 	
 }

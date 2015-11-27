@@ -6,9 +6,16 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.concurrent.FutureCallback;
 
+import cn.edu.fudan.se.IssueLogMining.hibernate.HibernateUtil;
+
 public abstract class AbstractDataHandler implements FutureCallback<HttpResponse>{
 	private CountDownLatch latch;
 	protected HttpRequestBase request;
+	protected HibernateUtil dataUtil;
+	
+	public void setUtil(HibernateUtil dataUtil){
+		this.dataUtil = dataUtil;
+	}
 
 	public void setLatch(CountDownLatch latch) {
 		this.latch = latch;

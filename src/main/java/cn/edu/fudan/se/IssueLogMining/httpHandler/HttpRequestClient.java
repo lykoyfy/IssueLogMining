@@ -5,6 +5,7 @@
  */
 package cn.edu.fudan.se.IssueLogMining.httpHandler;
 
+import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 
 import org.apache.http.client.config.RequestConfig;
@@ -64,5 +65,14 @@ public class HttpRequestClient {
 			return ret;
 		}
 		return url;
+	}
+	
+	public void closeHttpClient(){
+		try {
+			httpclient.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

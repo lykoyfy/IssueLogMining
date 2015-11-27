@@ -18,7 +18,6 @@ create table groups(
 	is_active boolean,
 	primary key(id)
 );
-user
 drop table if exists product;
 create table product(
 	id integer not null,

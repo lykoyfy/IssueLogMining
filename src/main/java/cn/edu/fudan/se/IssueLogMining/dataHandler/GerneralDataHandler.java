@@ -1,25 +1,24 @@
- package cn.edu.fudan.se.IssueLogMining.dataHandler;
+package cn.edu.fudan.se.IssueLogMining.dataHandler;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
-import java.io.IOException;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
-import org.apache.http.util.EntityUtils;
-import org.json.HTTP;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
-import cn.edu.fudan.se.IssueLogMining.bean.User;
 import cn.edu.fudan.se.IssueLogMining.decoder.UserDecode;
-import cn.edu.fudan.se.IssueLogMining.hibernate.HibernateUtil;
-import cn.edu.fudan.se.IssueLogMining.jsonBean.Users;
 
-public class UserDataHandler extends AbstractDataHandler{
+public class GerneralDataHandler<T> extends AbstractDataHandler{
 	
+	private Class<?> data;
+	
+	public void setData(Class<?> data) {
+		this.data = data;
+	}
+
 	@Override
 	public void cancelled() {
 		super.countDown();
@@ -48,8 +47,8 @@ public class UserDataHandler extends AbstractDataHandler{
 		}
 		
         try {
-        	List<User> userList = UserDecode.decode(result.toString(), Users.class);
-        	dataUtil.save(userList);
+        	List<T> dataList = UserDecode.decodeList(result.toString(), data);
+        	dataUtil.save(dataList);
         	dataUtil.closeSession();
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -71,9 +70,10 @@ public class UserDataHandler extends AbstractDataHandler{
 
 	@Override
 	public AbstractDataHandler clone() {
-		UserDataHandler handler = new UserDataHandler();
+		GerneralDataHandler handler = new GerneralDataHandler();
 		handler.setUtil(dataUtil);
+		handler.setData(data);
 		return handler;
 	}
-	
+
 }

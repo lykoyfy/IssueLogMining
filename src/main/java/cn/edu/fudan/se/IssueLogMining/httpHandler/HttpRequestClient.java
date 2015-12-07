@@ -18,11 +18,6 @@ import cn.edu.fudan.se.IssueLogMining.dataHandler.AbstractDataHandler;
 public class HttpRequestClient {
 
 	private CloseableHttpAsyncClient httpclient;
-	private String token;
-	
-	public void setToken(String token){
-		this.token = token;
-	}
 	
 	public void init(){
 		RequestConfig requestConfig = RequestConfig.custom()
@@ -37,8 +32,7 @@ public class HttpRequestClient {
 			final CountDownLatch latch = new CountDownLatch(urls.length);
 			
 			for(String url : urls){
-				String tokenUrl = this.addToken(url);
-			    final HttpGet request = new HttpGet(tokenUrl);
+			    final HttpGet request = new HttpGet(url);
 			    AbstractDataHandler cloneDataHandler =  dataHandler.clone();
 			    cloneDataHandler.setLatch(latch);
 			    cloneDataHandler.setRequest(request);
@@ -57,14 +51,6 @@ public class HttpRequestClient {
 		}
 		 
 				
-	}
-	
-	private String addToken(String url){
-		if(token != null){
-			String ret = url+"&token="+token;
-			return ret;
-		}
-		return url;
 	}
 	
 	public void closeHttpClient(){

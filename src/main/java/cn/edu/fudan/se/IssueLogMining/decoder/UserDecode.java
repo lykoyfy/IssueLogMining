@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.gson.Gson;
 
 import cn.edu.fudan.se.IssueLogMining.bean.User;
+import cn.edu.fudan.se.IssueLogMining.jsonBean.JsonBean;
 import cn.edu.fudan.se.IssueLogMining.jsonBean.Users;
 
 public class UserDecode {
@@ -20,6 +21,12 @@ public class UserDecode {
 		Gson gson = new Gson();
 		T t = gson.fromJson(jsonString, c);
 		return t;
+	}
+	
+	public static <T> List<T>  decodeList(String jsonString, Class c){
+		Gson gson = new Gson();
+		JsonBean beans = gson.fromJson(jsonString, c);
+		return beans.getChildren();		
 	}
 	
 }

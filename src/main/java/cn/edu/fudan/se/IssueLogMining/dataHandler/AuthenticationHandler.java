@@ -9,15 +9,15 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import cn.edu.fudan.se.IssueLogMining.excute.Properties;
 import cn.edu.fudan.se.IssueLogMining.httpHandler.HttpRequestClient;
 import cn.edu.fudan.se.IssueLogMining.httpHandler.HttpRequestClientFactory;
 
 public class AuthenticationHandler extends AbstractDataHandler {
+	private Properties properties;
 	
-	private HttpRequestClientFactory clientFactory;
-	
-	public void setHttpRequest(HttpRequestClientFactory clientFactory) {
-		this.clientFactory = clientFactory;
+	public void setProperties(Properties properties) {
+		this.properties = properties;
 	}
 
 	@Override
@@ -37,9 +37,9 @@ public class AuthenticationHandler extends AbstractDataHandler {
             JSONObject tokenJson = (JSONObject) jsonTokener.nextValue();  
             String token = tokenJson.getString("token");
             int id = tokenJson.getInt("id");
+            properties.setToken(token);
             System.out.println(token);
             System.out.println(id);
-            clientFactory.setToken(token);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -62,7 +62,7 @@ public class AuthenticationHandler extends AbstractDataHandler {
 	@Override
 	public AbstractDataHandler clone() {
 		AuthenticationHandler ret =  new AuthenticationHandler();
-		ret.setHttpRequest(clientFactory);
+		ret.setProperties(properties);
 		return ret;
 	}
 	

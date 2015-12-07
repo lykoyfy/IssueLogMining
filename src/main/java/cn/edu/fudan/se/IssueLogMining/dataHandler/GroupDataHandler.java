@@ -1,34 +1,31 @@
- package cn.edu.fudan.se.IssueLogMining.dataHandler;
+package cn.edu.fudan.se.IssueLogMining.dataHandler;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
-import java.io.IOException;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
-import org.apache.http.util.EntityUtils;
-import org.json.HTTP;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
+import cn.edu.fudan.se.IssueLogMining.bean.Group;
 import cn.edu.fudan.se.IssueLogMining.bean.User;
 import cn.edu.fudan.se.IssueLogMining.decoder.UserDecode;
-import cn.edu.fudan.se.IssueLogMining.hibernate.HibernateUtil;
-import cn.edu.fudan.se.IssueLogMining.jsonBean.Users;
+import cn.edu.fudan.se.IssueLogMining.jsonBean.Groups;
 
-public class UserDataHandler extends AbstractDataHandler{
-	
+public class GroupDataHandler extends AbstractDataHandler{
+
 	@Override
 	public void cancelled() {
 		super.countDown();
         System.out.println("cancelled!!");
-        super.printInfo();
+        super.printInfo();		
 	}
 
 	@Override
 	public void completed(HttpResponse response) {
+		// TODO Auto-generated method stub
         System.out.println("completed!!");
         System.out.println(response.getStatusLine());
         HttpEntity myEntity = response.getEntity();
@@ -48,7 +45,7 @@ public class UserDataHandler extends AbstractDataHandler{
 		}
 		
         try {
-        	List<User> userList = UserDecode.decode(result.toString(), Users.class);
+        	List<Group> userList = UserDecode.decodeList(result.toString(), Groups.class);
         	dataUtil.save(userList);
         	dataUtil.closeSession();
 		} catch (ParseException e) {
@@ -58,6 +55,7 @@ public class UserDataHandler extends AbstractDataHandler{
 			super.countDown();
 			
 		}		
+
 	}
 
 	@Override
@@ -71,9 +69,9 @@ public class UserDataHandler extends AbstractDataHandler{
 
 	@Override
 	public AbstractDataHandler clone() {
-		UserDataHandler handler = new UserDataHandler();
-		handler.setUtil(dataUtil);
-		return handler;
+		GroupDataHandler dataHandler = new GroupDataHandler();
+		dataHandler.setUtil(dataUtil);
+		return dataHandler;
 	}
-	
+
 }
